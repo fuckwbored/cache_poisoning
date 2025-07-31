@@ -1,0 +1,21 @@
+Cache Key Confusion (Limitations)
+
+Суть та же самая, но теперь мы делаем DoS
+
+https://site.com/file.js - Кэшируемый файл
+Разделитель - $ (видит только back end)
+
+https://site.com/file.js$/../mainpage 
+Пользователь при переходе на mainpage получит содержимое файла file.js => DoS
+
+
+
+https://site.com/file.js - Кэшируемый файл
+Разделитель - # (видит только front end)
+
+https://site.com/mainpage#/../file.js 
+Пользователь при переходе на mainpage получит содержимое файла file.js => DoS
+
+Тоесть все то самое, но на file.js нету никакой уязвимости. Просто обычный кэшируемый файл
+
+[NOTE] При всех тестах обфусцируем пути и т.д как показано в cache deception техниках
