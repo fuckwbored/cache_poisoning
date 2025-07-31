@@ -35,6 +35,8 @@ myapikey/x#jpeg
 https://site.org/content/../myapikey - Cached
 https://site.org/content%2F..%2Fmyapikey - Cached
 https://site.org/content%2f%2e%2e%2fmyapikey - Cached
+Так же можем пробовать юрл декодить частично или полностью директории
+
 Играйте с /../  как можно больше, чтобы обмануть фронт энд
 Кстати, в IIS символ \ заменяеться на / автоматом :) Возьмите во внимание
 
@@ -53,3 +55,4 @@ https://site.org/content/666.jpg - 404, not cached
 https://site.org/content/1.jpg/../myapikey
 https://site.org;myapikey/../content/1.jpg
 Так же играйте с /../ как и в прошлых примерах. И не только как в прошлых примерах
+
