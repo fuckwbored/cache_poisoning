@@ -42,7 +42,7 @@ X-True-Cache-Key: /example.com/index.loggedout.html vcd=1234 cid=__Origin=zxcv
 
 
 5. Дополнительный поиск забытых файлов
-1. Собираем файлы через waymore/katana
+1. Собираем файлы через waymore/katana (обязательно смотрим через waymore какие то параметры, часто параметры аналитики unkeyed)
 [NOTE] Waymore может дать забытые файлы, какие лежат пыляться на серваке, но могут быть уязвимы
 2. Потом прогоняем через httpx-toolkit -l urls.txt  -irr -silent -json -o out.json (желательно 2-4 раза)
 3. В файле out.txt смотрим через CTRL + F заголовки, какие показывают, что файл закэширован
