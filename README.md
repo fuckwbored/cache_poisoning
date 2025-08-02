@@ -18,6 +18,8 @@ https://nishacid.guru/assets/docs/Web_Cache_Poisoning.pdf
 
 https://portswigger.net/research/web-cache-entanglement
 
+https://anasbetis023.medium.com/dont-trust-the-cache-exposing-web-cache-poisoning-and-deception-vulnerabilities-3a829f221f52
+
 ## Video conferences:
 
 https://www.youtube.com/watch?v=70yyOMFylUA
