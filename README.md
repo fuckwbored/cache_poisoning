@@ -12,6 +12,12 @@ https://eh.su/reports/122
 
 https://youst.in/posts/cache-key-normalization-denial-of-service/
 
+https://enumerated.wordpress.com/2020/08/05/the-case-of-the-missing-cache-keys/
+
+https://nishacid.guru/assets/docs/Web_Cache_Poisoning.pdf
+
+https://portswigger.net/research/web-cache-entanglement
+
 ## Video conferences:
 
 https://www.youtube.com/watch?v=70yyOMFylUA
