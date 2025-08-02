@@ -28,7 +28,18 @@ site.com/images/robots.txt = cached, 404
 site.com/random.zip = 404, not cached
 site.com/random.js = 404, cached
 
-4. Ищем по всему сайту cache oracle и играем с ним, чтобы понять, как работает кэш
+4. Ищем по всему сайту cache oracle и играем с ним, чтобы понять, как работает кэш (URL декодиим, пробуем двойные слэши и т д)
+На нескольких кэш эндпоинтах и орканулах мы пробвем получить cache key, например в Akami:
+
+==============================================================================================================================
+Pragma: akamai-x-get-cache-key, akamai-x-get-true-cache-key
+
+200 OK
+X-Cache-Key: /example.com/index.loggedout.html?akamai-transform=9 cid=__Origin=zxcv
+X-Cache-Key-Extended-Internal-Use-Only: /example.com/index.loggedout.html?akamai-transform=9 vcd=1234 cid=__Origin=zxcv
+X-True-Cache-Key: /example.com/index.loggedout.html vcd=1234 cid=__Origin=zxcv
+==============================================================================================================================
+
 
 5. Дополнительный поиск забытых файлов
 1. Собираем файлы через waymore/katana
