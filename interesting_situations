@@ -1,0 +1,63 @@
+================================= 1. Cache Buster не работает! =================================
+
+Есть страницы, какие могут быть динамическими, но из за неправильно настроеного кэша они показывают HIT. Причем в key не лежат никакие параметры
+Тоесть cache busters таким страницам по барабану
+И это очень хорошо, если есть такие страницы. Есть большая вероятность, что они уязвимы. Просто кэш скрывает уязвимость. Многие баг хантеры и все сканнеры попросту не смогли бы ее найти
+
+Решение #1:
+Cache keys в заголовках:
+В парам майнере тыкаем на 'Add static cachebuster' и 'Include cachebusters in headers' и брутим query/headers. В Logger мы можем следить за X-Cache
+P.s: Часто cache key это заголовок Origin. Перед тестами с Param Miner пробуем с ним
+
+Решение #2:
+Если №1 не помогло, значит, в KEY нету заголовков. Для этого используем техники обфускации URL, например:
+Apache: //
+Nginx: /%2F
+PHP: /index.php/xyz
+.NET: /(A(xyz))/
+Обфускация path traversal, разный энкод  и т.д...
+
+site/com/faq => HIT
+site.com//faq => MISS
+
+Решение #3:
+Брут чего там надо с методами PURGE/FASTLYPURGE
+Эти методы стирают кэш при каждом запросе на сервере
+
+
+
+
+================================= 2. Кэшируемый redirect =================================
+Если локально кэшируеться редирект, это может быть полезно. Обращаем на это внимание
+Примеры (endpoint https://site.com):
+
+Пример #1:
+При переходе на https://site.com редиректит на /index.html, 301, HIT
+
+Если добавим кэш бастер и unkeyed port:
+GET /?x=cahddsk
+Host: site.com:1
+
+HTTP 1.1/ Moved Permanently
+Location: https://site.com:1/index.html
+
+Результат: Дос главной страницы из за порта
+
+Пример #2:
+Cache buster - Origin
+x - unkeyed parameter
+
+GET /login?x=abc HTTP/1.1
+Host: site.com
+Origin: dontpoison.com
+
+HTTP 1.1/ Moved Permanently
+Location: https://site.com/login/?x=abc
+
+Если в x отправить супербольшое значение, закэширует 414 URI Too Large
+
+Теперь при переходе на /login/ кидает ошибку 414 URI Too Large
+[NOTE] CDN в основном не кэшируют статус коды, какие отвечают з ошиибку
+
+Но может быть такое, что в таком случае. Если unkeyed query string отражается в Location header, X-Cache: MISS
+В этом случае можно заэнкодить первый символ в query string :) (https://www.youtube.com/watch?v=bDxYWGxuVqE, 20:00)
